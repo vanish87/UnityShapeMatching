@@ -239,7 +239,6 @@ namespace UnityClimbingPlant
                 p.velocity = (p.predictPos - p.pos) / dt;
                 p.pos = p.predictPos;
 
-
                 var pq = math.mul(p.predictRotation, math.inverse(p.rotation));
                 if (pq.value.w < 0) pq.value = -pq.value;
 
@@ -249,8 +248,6 @@ namespace UnityClimbingPlant
                 this.GetAngleAxis(pq, out angle, out axis);
 
                 if (math.abs(angle) < 0.01f) angle = 0;
-                // angle = math.clamp(angle, -1f,1f);
-                // p.qt = quaternion.AxisAngle(axis, angle);
 
                 p.w = axis * angle / dt;
                 p.rotation = p.predictRotation;
