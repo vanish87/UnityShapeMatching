@@ -46,10 +46,7 @@ namespace UnityClimbingPlant
                                          0, 0, this.c * this.c);
 
                     var R = new float3x3(this.predictRotation);
-                    // return (1.0f / 5) * this.Mass * math.mul(A, this.globalR);
                     return (1.0f / 5) * this.Mass * math.mul(A, R);
-                    // return (1.0f / 5) * this.Mass * math.mul(A, this.localR);
-
                 }
             }
 
@@ -105,9 +102,12 @@ namespace UnityClimbingPlant
         [SerializeField] protected Mesh testMesh;
         [SerializeField] protected Transform anchor;
         [SerializeField] protected Bounds domain = new Bounds(new float3(0, 20, 0), new float3(40, 40, 20));
+
+        [SerializeField] protected float stiffness = 1;
+        [SerializeField] protected float dt = 0.05f;
+        [SerializeField] protected float3 gravity = new float3(0, -9.8f, 0);
+
         protected ParticleGraph g = new ParticleGraph();
-
-
         protected void Start()
         {
             this.AddMesh(this.testMesh);
@@ -161,9 +161,6 @@ namespace UnityClimbingPlant
             }
         }
 
-        [SerializeField] protected float stiffness = 1;
-        float dt = 0.05f;
-        float3 gravity = new float3(0, -9.8f, 0);
         protected void Prediction()
         {
             var count = 0;
